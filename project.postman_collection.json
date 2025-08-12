@@ -1,0 +1,885 @@
+{
+	"info": {
+		"_postman_id": "743797de-44ca-421f-9321-f18253b49396",
+		"name": "ITI API Testing Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37611967"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login as superuser with non-existent email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"cannot login with non-existent email\", function() {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"should have an error message\", function () {\r",
+									"    pm.expect(body.message).to.eq(\"Failed to authenticate.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identity\": \"non-existent-user@example.com\",\r\n    \"password\": \"{{adminPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/_superusers/auth-with-password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"_superusers",
+								"auth-with-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as superuser with wrong password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"cannot login with wrong password\", function() {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"should have an error message\", function () {\r",
+									"    pm.expect(body.message).to.eq(\"Failed to authenticate.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identity\": \"{{adminEmail}}\",\r\n    \"password\": \"wrong password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/_superusers/auth-with-password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"_superusers",
+								"auth-with-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as superuser without email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"cannot login without an email\", function() {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"should have an email error message\", function() {\r",
+									"    pm.expect(body.data.identity.message).to.eql(\"Cannot be blank.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"{{adminPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/_superusers/auth-with-password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"_superusers",
+								"auth-with-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as superuser without password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"cannot login without a password\", function() {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"should have a password error message\", function() {\r",
+									"    pm.expect(body.data.password.message).to.eql(\"Cannot be blank.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identity\": \"{{adminEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/_superusers/auth-with-password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"_superusers",
+								"auth-with-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as superuser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"can login with default credentials\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Token is not undefined\", function() {\r",
+									"    pm.expect(body.token).to.not.be.undefined;\r",
+									"    pm.collectionVariables.set(\"adminToken\", body.token);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is unique\", function() {\r",
+									"    const oldToken = pm.collectionVariables.get(\"oldAdminToken\");\r",
+									"    pm.expect(oldToken).to.not.eq(body.token);\r",
+									"    pm.collectionVariables.unset(\"oldAdminToken\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User belongs to _superusers collection\", function () {\r",
+									"    pm.expect(body.record.collectionName).to.eq(\"_superusers\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const oldAdminToken = pm.collectionVariables.get(\"adminToken\");\r",
+									"pm.collectionVariables.set(\"oldAdminToken\", oldAdminToken);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identity\": \"{{adminEmail}}\",\r\n    \"password\": \"{{adminPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/_superusers/auth-with-password",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"_superusers",
+								"auth-with-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create",
+			"item": [
+				{
+					"name": "Create a customer with invalid data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"phone should have a validation message\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.data.phone.message).to.equal(\"Invalid value format.\");",
+									"});",
+									"",
+									"pm.test(\"name should have a validation message\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.data.name.message).to.equal(\"Cannot be blank.\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone\": \"+2012\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/customers/records",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"customers",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"customer should be created\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(pm.response.code).to.be.eq(200);",
+									"    pm.collectionVariables.set(\"tempCustomerId\", response.id);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"محمد علي\",\n    \"phone\": \"+201234567890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/customers/records",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"customers",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a product with invalid data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"name should have a validation message\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.data.name.message).to.equal(\"Cannot be blank.\");",
+									"});",
+									"",
+									"pm.test(\"price should have a validation message\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.data.price.message).to.equal(\"Cannot be blank.\");",
+									"});",
+									"",
+									"pm.test(\"stock should have a validation message\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.data.stock.message).to.contain(\"Must be larger than 0.0\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"stock\": -9\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/products/records",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"products",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"product should be created\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(pm.response.code).to.be.eq(200);",
+									"    pm.collectionVariables.set(\"tempProductrId\", response.id);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"شاي أخضر\",\n    \"price\": 50,\n    \"stock\": 35\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/products/records",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"products",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a sale",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"sale should be created\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(pm.response.code).to.be.eq(200);",
+									"    pm.collectionVariables.set(\"tempSaleId\", response.id);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer\": \"{{tempCustomerId}}\",\n    \"product\": \"{{tempProductrId}}\",\n    \"quantity\": 10,\n    \"timestamp\": \"2025-08-11 20:12:01.483Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/sales/records",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"sales",
+								"records"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Edit",
+			"item": [
+				{
+					"name": "Edit a customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"customer should be edited\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(pm.response.code).to.be.eq(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"محمد علي\",\n    \"phone\": \"+201234567891\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/customers/records/{{tempCustomerId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"customers",
+								"records",
+								"{{tempCustomerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"product should be edited\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(pm.response.code).to.be.eq(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"price\": 45\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/products/records/{{tempProductrId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"products",
+								"records",
+								"{{tempProductrId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a sale",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"sale should be edited\", () => {",
+									"    const response = pm.response.json();",
+									"    pm.expect(pm.response.code).to.be.eq(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/collections/sales/records/{{tempSaleId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"sales",
+								"records",
+								"{{tempSaleId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete",
+			"item": [
+				{
+					"name": "Delete a sale",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"sale should be deleted\", () => {",
+									"    pm.expect(pm.response.code).to.be.eq(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/collections/sales/records/{{tempSaleId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"sales",
+								"records",
+								"{{tempSaleId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"customer should be deleted\", () => {",
+									"    pm.expect(pm.response.code).to.be.eq(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/collections/customers/records/{{tempCustomerId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"customers",
+								"records",
+								"{{tempCustomerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"product should be deleted\", () => {",
+									"    pm.expect(pm.response.code).to.be.eq(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/collections/products/records/{{tempProductrId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"collections",
+								"products",
+								"records",
+								"{{tempProductrId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"const adminToken = pm.collectionVariables.get(\"adminToken\");\r",
+					"pm.request.addHeader(`Authorization: ${adminToken}`);\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"/** @typedef {(pm: Postman) => void} HelperFunction */\r",
+					"\r",
+					"responseHelpers = {\r",
+					"    /** @type {HelperFunction} */\r",
+					"    shouldPass(pm) {\r",
+					"        pm.expect(1).to.eq(1)\r",
+					"    }\r",
+					"}\r",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8090/api",
+			"type": "string"
+		},
+		{
+			"key": "adminEmail",
+			"value": "admin@localhost.localhost",
+			"type": "string"
+		},
+		{
+			"key": "adminPassword",
+			"value": "password",
+			"type": "string"
+		},
+		{
+			"key": "adminToken",
+			"value": ""
+		},
+		{
+			"key": "userToken",
+			"value": ""
+		},
+		{
+			"key": "tempCustomerId",
+			"value": ""
+		},
+		{
+			"key": "tempProductrId",
+			"value": ""
+		},
+		{
+			"key": "tempSaleId",
+			"value": ""
+		}
+	]
+}

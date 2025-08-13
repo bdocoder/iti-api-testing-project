@@ -115,7 +115,7 @@ level: 2
 
 Example usage:
 
-```http {all|1|3-}
+```http {all|1|3-|all}
 POST http://localhost:8090/api/collections/_superusers/auth-with-password
 
 {
